@@ -1,0 +1,131 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 20px;
+  color: #333;
+}
+
+#graph-builder, #speed-control, #controls {
+  margin: 20px auto;
+  width: 420px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+input[type="text"] {
+  width: 100px;
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 6px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+button.action {
+  background-color: #0078d4;
+  color: white;
+}
+
+button.action:hover {
+  background-color: #005fa3;
+}
+
+button.reset {
+  background-color: #f44336;
+  color: white;
+}
+
+button.reset:hover {
+  background-color: #d32f2f;
+}
+
+#speed-control input[type="range"] {
+  width: 200px;
+}
+
+#graph-container {
+  position: relative;
+  width: 700px;
+  height: 450px;
+  margin: 30px auto;
+  border: 2px solid #ddd;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#graph {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#graph-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.node {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  line-height: 40px;
+  text-align: center;
+  position: absolute;
+  border: 2px solid #333;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.node.visited {
+  background-color: #ffa500;
+  transform: scale(1.1);
+}
+
+#data-structure {
+  margin-top: 20px;
+}
+
+#structure-display {
+  list-style: none;
+  padding: 0;
+}
+
+#structure-display li {
+  display: inline-block;
+  background: #0078d4;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+footer {
+  margin-top: 30px;
+  padding: 10px;
+  color: #555;
+  font-size: 14px;
+}

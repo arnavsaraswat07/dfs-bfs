@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BFS / DFS Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>BFS / DFS Traversal Visualizer</h1>
+
+  <div id="graph-builder">
+    <h3>Build Your Graph</h3>
+    <input type="text" id="node-input" placeholder="Node name (e.g. A)">
+    <button onclick="addNode()">Add Node</button>
+    <br><br>
+    <input type="text" id="edge-from" placeholder="From">
+    <input type="text" id="edge-to" placeholder="To">
+    <button onclick="addEdge()">Add Edge</button>
+  </div>
+
+  <div id="speed-control">
+    <label for="speed">Traversal Speed (ms): </label>
+    <input type="range" id="speed" min="100" max="2000" step="100" value="500">
+    <span id="speed-value">500</span> ms
+  </div>
+
+  <div id="controls">
+    <button class="action" onclick="startBFS()">Start BFS</button>
+    <button class="action" onclick="startDFS()">Start DFS</button>
+    <button class="reset" onclick="resetGraph()">Reset</button>
+  </div>
+
+  <div id="graph-container">
+    <svg id="graph-canvas"></svg>
+    <div id="graph"></div>
+  </div>
+
+  <div id="data-structure">
+    <h3>Queue / Stack</h3>
+    <ul id="structure-display"></ul>
+  </div>
+
+  <footer>
+    <p>Created with ❤️ by Arnav — BFS/DFS Graph Visualizer</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
