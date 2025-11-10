@@ -20,11 +20,11 @@
       <div id="graph-builder">
         <h3>Build Your Graph</h3>
         <input type="text" id="node-input" placeholder="Node name (e.g. A)">
-        <button onclick="addNode()">Add Node</button>
+        <button id="add-node">Add Node</button>
         <br><br>
         <input type="text" id="edge-from" placeholder="From">
         <input type="text" id="edge-to" placeholder="To">
-        <button onclick="addEdge()">Add Edge</button>
+        <button id="add-edge">Add Edge</button>
       </div>
 
       <div id="speed-control">
@@ -34,9 +34,9 @@
       </div>
 
       <div id="controls">
-        <button class="action" onclick="startBFS()">Start BFS</button>
-        <button class="action" onclick="startDFS()">Start DFS</button>
-        <button class="reset" onclick="resetGraph()">Reset</button>
+        <button id="start-bfs" class="action">Start BFS</button>
+        <button id="start-dfs" class="action">Start DFS</button>
+        <button id="reset-graph" class="reset">Reset</button>
       </div>
 
       <div id="data-structure">
