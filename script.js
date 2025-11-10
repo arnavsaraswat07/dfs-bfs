@@ -12,6 +12,7 @@ document.getElementById('add-edge').addEventListener('click', addEdge);
 document.getElementById('start-bfs').addEventListener('click', startBFS);
 document.getElementById('start-dfs').addEventListener('click', startDFS);
 document.getElementById('reset-graph').addEventListener('click', resetGraph);
+document.getElementById('delete-node').addEventListener('click', deleteNode);
 
 function addNode() {
   const node = document.getElementById('node-input').value.trim();
@@ -42,6 +43,28 @@ function addEdge() {
   }
   document.getElementById('edge-from').value = '';
   document.getElementById('edge-to').value = '';
+}
+
+function deleteNode() {
+  const node = document.getElementById('delete-node-input').value.trim();
+  if (!graph[node]) return alert("Node doesn't exist!");
+
+  const el = document.getElementById(node);
+  if (el) el.remove();
+
+  delete graph[node];
+  delete positions[node];
+
+  Object.keys(graph).forEach(from => {
+    graph[from] = graph[from].filter(to => to !== node);
+  });
+
+  document.getElementById('graph-canvas').innerHTML = '';
+  Object.keys(graph).forEach(from => {
+    graph[from].forEach(to => drawEdge(from, to));
+  });
+
+  document.getElementById('delete-node-input').value = '';
 }
 
 function drawEdge(from, to) {
@@ -133,7 +156,6 @@ function resetGraph() {
   });
 }
 
-// Make nodes draggable
 document.getElementById('graph').addEventListener('mousedown', function(e) {
   const target = e.target;
   if (!target.classList.contains('node')) return;
