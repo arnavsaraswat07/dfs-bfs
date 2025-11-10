@@ -7,6 +7,12 @@ document.getElementById('speed').addEventListener('input', (e) => {
   document.getElementById('speed-value').textContent = traversalSpeed;
 });
 
+document.getElementById('add-node').addEventListener('click', addNode);
+document.getElementById('add-edge').addEventListener('click', addEdge);
+document.getElementById('start-bfs').addEventListener('click', startBFS);
+document.getElementById('start-dfs').addEventListener('click', startDFS);
+document.getElementById('reset-graph').addEventListener('click', resetGraph);
+
 function addNode() {
   const node = document.getElementById('node-input').value.trim();
   if (node && !graph[node]) {
@@ -87,4 +93,81 @@ async function startBFS() {
     }
   }
 
-  document.getElementById('traversal-output').textContent = traversalOrder
+  document.getElementById('traversal-output').textContent = traversalOrder.join(' → ');
+}
+
+async function startDFS() {
+  resetGraph();
+  const visited = new Set();
+  const startNode = Object.keys(graph)[0];
+  if (!startNode) return alert("Add at least one node first!");
+  const stack = [startNode];
+  const traversalOrder = [];
+
+  while (stack.length > 0) {
+    const node = stack.pop();
+    if (!visited.has(node)) {
+      visited.add(node);
+      traversalOrder.push(node);
+      highlightNode(node);
+      updateStructureDisplay(stack);
+      await new Promise(r => setTimeout(r, traversalSpeed));
+      graph[node].slice().reverse().forEach(n => {
+        if (!visited.has(n)) stack.push(n);
+      });
+    }
+  }
+
+  document.getElementById('traversal-output').textContent = traversalOrder.join(' → ');
+}
+
+function resetGraph() {
+  document.querySelectorAll('.node').forEach(node => {
+    node.classList.remove('visited');
+  });
+  updateStructureDisplay([]);
+  document.getElementById('traversal-output').textContent = '';
+  document.getElementById('graph-canvas').innerHTML = '';
+  Object.keys(graph).forEach(from => {
+    graph[from].forEach(to => drawEdge(from, to));
+  });
+}
+
+// Make nodes draggable
+document.getElementById('graph').addEventListener('mousedown', function(e) {
+  const target = e.target;
+  if (!target.classList.contains('node')) return;
+
+  let shiftX = e.clientX - target.getBoundingClientRect().left;
+  let shiftY = e.clientY - target.getBoundingClientRect().top;
+
+  function moveAt(pageX, pageY) {
+    const container = document.getElementById('graph-container');
+    const rect = container.getBoundingClientRect();
+    let x = pageX - rect.left - shiftX;
+    let y = pageY - rect.top - shiftY;
+
+    x = Math.max(0, Math.min(x, container.offsetWidth - target.offsetWidth));
+    y = Math.max(0, Math.min(y, container.offsetHeight - target.offsetHeight));
+
+    target.style.left = `${x}px`;
+    target.style.top = `${y}px`;
+    positions[target.id] = { x, y };
+
+    document.getElementById('graph-canvas').innerHTML = '';
+    Object.keys(graph).forEach(from => {
+      graph[from].forEach(to => drawEdge(from, to));
+    });
+  }
+
+  function onMouseMove(e) {
+    moveAt(e.pageX, e.pageY);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  target.onmouseup = function() {
+    document.removeEventListener('mousemove', onMouseMove);
+    target.onmouseup = null;
+  };
+});
