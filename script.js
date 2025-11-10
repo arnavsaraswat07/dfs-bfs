@@ -71,11 +71,13 @@ async function startBFS() {
   const startNode = Object.keys(graph)[0];
   if (!startNode) return alert("Add at least one node first!");
   const queue = [startNode];
+  const traversalOrder = [];
 
   while (queue.length > 0) {
     const node = queue.shift();
     if (!visited.has(node)) {
       visited.add(node);
+      traversalOrder.push(node);
       highlightNode(node);
       updateStructureDisplay(queue);
       await new Promise(r => setTimeout(r, traversalSpeed));
@@ -84,34 +86,5 @@ async function startBFS() {
       });
     }
   }
-}
 
-async function startDFS() {
-  resetGraph();
-  const visited = new Set();
-  const startNode = Object.keys(graph)[0];
-  if (!startNode) return alert("Add at least one node first!");
-  const stack = [startNode];
-
-  while (stack.length > 0) {
-    const node = stack.pop();
-    if (!visited.has(node)) {
-      visited.add(node);
-      highlightNode(node);
-      updateStructureDisplay(stack);
-      await new Promise(r => setTimeout(r, traversalSpeed));
-      graph[node].slice().reverse().forEach(n => {
-        if (!visited.has(n)) stack.push(n);
-      });
-    }
-  }
-}
-
-function resetGraph() {
-  document.querySelectorAll('.node').forEach(node => {
-    node.classList.remove('visited');
-  });
-  updateStructureDisplay([]);
-}
-
-
+  document.getElementById('traversal-output').textContent = traversalOrder
